@@ -26,11 +26,16 @@ const AllCards = () => {
     }, [])
 
     return (
-        <div className='w-full grid gap-4 grid-cols-3 grid-rows-3'>
-            {allPokemon.map((pokemon, i) => (
-                <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url}/>
-            ))}
-        </div>
+        <>
+            <header className='text-center mb-8'>
+                <h1>Available Pokemon</h1>
+            </header>
+            <div className='grid justify-center gap-10 grid-cols-3 grid-rows-3'>
+                {allPokemon.map((pokemon, i) => (
+                    <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url}/>
+                ))}
+            </div>
+        </>
     )
 }
 
