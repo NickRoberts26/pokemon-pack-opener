@@ -74,8 +74,6 @@ const TradingCard = ({name, apiCall}) => {
   //Creates the moveset for each Pokemon
   const randomMoves = getRandomElements(moveset);
 
-  console.log(types)
-
   return (
     <div className={`card relative flex flex-col justify-between border-8 border-pikachu rounded-xl p-8 transform duration-500 hover:scale-[1.01]`}>
       <header>

@@ -1,10 +1,13 @@
 import React from 'react'
 import AllCards from '../components/AllCards'
 
-const FullCollectionPage = () => {
+const FullCollectionPage = ({pokemonData}) => {
   return (
     <div>
-      <AllCards />
+      <header className='text-center mb-8'>
+        <h1>Available Pokemon</h1>
+      </header>
+      <AllCards pokemonData={pokemonData}/>
     </div>
   )
 }
