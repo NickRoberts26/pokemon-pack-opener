@@ -4,9 +4,9 @@ import TradingCard from './TradingCard';
 const Pack = ({pokemonData}) => {
 
     const [pack, setPack] = useState([]);
-    const [rarities, setRarities] = useState(
-        ['bronze', 'silver', 'gold', 'diamond']
-    );
+    const [openedPack, setOpenedPack] = useState(false);
+
+    const rarities = ['bronze', 'silver', 'gold', 'diamond'];
     const probabilities = [0.5, 0.3, 0.15, 0.05];
 
     const getRandomRarity = () => {
@@ -19,8 +19,8 @@ const Pack = ({pokemonData}) => {
           }
         }
     };
-
-    const generatePack = (arr, rarity) => {
+        
+    const generatePack = (arr) => {
         const shuffledPokemon = arr.sort(() => 0.5 - Math.random());
         let selected = shuffledPokemon.slice(0, 5);
 
@@ -29,25 +29,37 @@ const Pack = ({pokemonData}) => {
                 key: i,
                 name: card.name,
                 url: card.url,
-                poop: rarity,
+                rarity: getRandomRarity(),
             }
         ))
 
         setPack(addedRare);
     }
 
+    const openPack = () => {
+        setOpenedPack(true);
+    }
+
     useEffect(() => {
-        generatePack(pokemonData, getRandomRarity());
+        generatePack(pokemonData);
     }, [pokemonData]);
 
-    console.log(pack);
-
     return (
-        <div className='pack-lineup grid justify-center gap-10 grid-cols-5 grid-rows-1'>
-            {pack.map((pokemon, i) => (
-                <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url}/>
-            ))}
-        </div>
+        <>
+            <div onClick={openPack}>
+                { openedPack ? 
+                    <div className='pack-lineup grid justify-center gap-10 grid-cols-5 grid-rows-1'>
+                        {pack.map((pokemon, i) => (
+                            <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url} rarity={pokemon.rarity} flipped={false}/>
+                        ))}
+                    </div>
+                    :
+                    <div>
+                        Open Pack
+                    </div>
+                }
+            </div>
+        </>
     )
 }
 

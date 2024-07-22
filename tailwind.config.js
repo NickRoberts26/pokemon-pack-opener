@@ -31,6 +31,10 @@ export default {
         'dark': '#705746',
         'steel': '#B7B7CE',
         'fairy': '#D685AD',
+        'bronze': '#CD7F32',
+        'silver': '#C0C0C0',
+        'gold': '#FFD700',
+        'diamond': '#B9F2FF'
       }
     },
   },

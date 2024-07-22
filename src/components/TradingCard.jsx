@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import ReactCardFlip from 'react-card-flip';
+import CardBack from './CardBack';
 
-const TradingCard = ({name, apiCall}) => {
+const TradingCard = ({name, apiCall, rarity, flipped}) => {
 
   const [pokemon, setPokemon] = useState({});
   const [moveset, setMoveset] = useState([]);
   const [types, setTypes] = useState([]);
+  const [isFlipped, setIsFlipped] = useState(flipped);
+  console.log(isFlipped);
 
   //Creates a bg-color for all the types
-  const typeToBgClass = {
-    normal: 'bg-normal',
-    fire: 'bg-fire',
-    water: 'bg-water',
-    electric: 'bg-electric',
-    grass: 'bg-grass',
-    ice: 'bg-ice',
-    fighting: 'bg-fighting',
-    poison: 'bg-poison',
-    ground: 'bg-ground',
-    flying: 'bg-flying',
-    psychic: 'bg-psychic',
-    bug: 'bg-bug',
-    rock: 'bg-rock',
-    ghost: 'bg-ghost',
-    dragon: 'bg-dragon',
-    dark: 'bg-dark',
-    steel: 'bg-steel',
-    fairy: 'bg-fairy'
+  const rarityToBorderClass = {
+    bronze: 'border-bronze',
+    silver: 'border-silver',
+    gold: 'border-gold',
+    diamond: 'border-diamond'
   };
-  const cardBg = typeToBgClass[pokemon.type] || 'bg-white-500';
+  const cardRarity = rarityToBorderClass[rarity] || 'border-pikachu';
 
   //Randomly selects 4 elements from an array and returns them
   const getRandomElements = (arr) => {
@@ -38,6 +28,12 @@ const TradingCard = ({name, apiCall}) => {
     
     const shuffled = [...onlyLvl].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 4);
+  };
+
+  const handleFlip = (e) => {
+    e.preventDefault();
+    setIsFlipped(prevState => !prevState);
+    console.log('clicked');
   };
 
   //Api Call
@@ -75,34 +71,31 @@ const TradingCard = ({name, apiCall}) => {
   const randomMoves = getRandomElements(moveset);
 
   return (
-    <div className={`card relative flex flex-col justify-between border-8 border-pikachu rounded-xl p-8 transform duration-500 hover:scale-[1.01]`}>
-      <header>
-        <h1 className='text-4xl text-center capitalize'>{pokemon.name}</h1>
-          <div className='absolute top-2 left-2 flex items-center'>
-            {types.map((type, i) => (
-              <div className='w-10 mr-1' key={i}>
-                <img src={`src/assets/type-icons/${type}_type.png`} alt="" />
-              </div>
-            ))}
-          </div>
-        <div className='w-10 absolute top-2 left-2 flex items-center'>
-          {/*
-            <img src={`src/assets/type-icons/${pokemon.type}_type.png`} alt="" />
-            <span className='capitalize ml-2'>{pokemon.type}</span>
-          */}
+    <ReactCardFlip isFlipped={isFlipped}>
+      <CardBack handleFlip={handleFlip} rarity={rarity} border={rarityToBorderClass}/>
+      <div className={`card ${cardRarity} h-[408px] relative flex flex-col justify-between border-8 rounded-xl p-8 transform duration-500 hover:scale-[1.01]`}>
+        <header>
+          <h1 className='text-4xl text-center capitalize'>{pokemon.name}</h1>
+            <div className='absolute top-2 left-2 flex items-center'>
+              {types.map((type, i) => (
+                <div className='w-10 mr-1' key={i}>
+                  <img src={`src/assets/type-icons/${type}_type.png`} alt="" />
+                </div>
+              ))}
+            </div>
+        </header>
+        <div className='flex justify-center h-64'>
+          {pokemon.diamond_image && (
+            <img className='object-contain' src={pokemon.gold_image} alt="" />
+          )}
         </div>
-      </header>
-      <div className='flex justify-center h-64'>
-        {pokemon.diamond_image && (
-          <img className='object-contain' src={pokemon.gold_image} alt="" />
-        )}
+        <div className='moves grid grid-cols-2 grid-rows-2'>
+          {randomMoves.map((move, i) => (
+            <p key={i} className='text-xs capitalize'>{move.move.name}</p>
+          ))}
+        </div>
       </div>
-      <div className='moves grid grid-cols-2 grid-rows-2'>
-        {randomMoves.map((move, i) => (
-          <p key={i} className='capitalize'>{move.move.name}</p>
-        ))}
-      </div>
-    </div>
+    </ReactCardFlip>
   )
 }
 

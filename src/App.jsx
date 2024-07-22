@@ -29,8 +29,6 @@ function App() {
       catchEmAll();
   }, [])
 
-  console.log(allPokemon)
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<MainLayout />}>
