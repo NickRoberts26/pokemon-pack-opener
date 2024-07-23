@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import ReactCardFlip from 'react-card-flip';
 import CardBack from './CardBack';
 
-const TradingCard = ({name, apiCall, rarity, flipped}) => {
+const TradingCard = ({apiCall, rarity, img, flipped}) => {
 
   const [pokemon, setPokemon] = useState({});
   const [moveset, setMoveset] = useState([]);
   const [types, setTypes] = useState([]);
   const [isFlipped, setIsFlipped] = useState(flipped);
-  console.log(isFlipped);
 
   //Creates a bg-color for all the types
   const rarityToBorderClass = {
@@ -33,7 +32,6 @@ const TradingCard = ({name, apiCall, rarity, flipped}) => {
   const handleFlip = (e) => {
     e.preventDefault();
     setIsFlipped(prevState => !prevState);
-    console.log('clicked');
   };
 
   //Api Call
@@ -42,6 +40,8 @@ const TradingCard = ({name, apiCall, rarity, flipped}) => {
         const response = await fetch(apiCall);
 
         const data = await response.json();
+
+        console.log(data);
 
         setPokemon({
           name: data.name,
@@ -73,9 +73,9 @@ const TradingCard = ({name, apiCall, rarity, flipped}) => {
   return (
     <ReactCardFlip isFlipped={isFlipped}>
       <CardBack handleFlip={handleFlip} rarity={rarity} border={rarityToBorderClass}/>
-      <div className={`card ${cardRarity} h-[408px] relative flex flex-col justify-between border-8 rounded-xl p-8 transform duration-500 hover:scale-[1.01]`}>
+      <div className={`card ${cardRarity} h-[408px] w-[270px] mb-8 mx-4 relative flex flex-col justify-between border-8 rounded-xl px-8 pb-8 pt-12`}>
         <header>
-          <h1 className='text-4xl text-center capitalize'>{pokemon.name}</h1>
+          <h1 className='text-3xl text-center capitalize'>{pokemon.name}</h1>
             <div className='absolute top-2 left-2 flex items-center'>
               {types.map((type, i) => (
                 <div className='w-10 mr-1' key={i}>
@@ -84,14 +84,14 @@ const TradingCard = ({name, apiCall, rarity, flipped}) => {
               ))}
             </div>
         </header>
-        <div className='flex justify-center h-64'>
+        <div className='flex justify-center'>
           {pokemon.diamond_image && (
-            <img className='object-contain' src={pokemon.gold_image} alt="" />
+            rarity ? <img className='object-contain w-3/5' src={pokemon[`${rarity}_image`]} alt="" /> : <img className='object-contain w-3/5' src={pokemon.gold_image} alt="" />
           )}
         </div>
         <div className='moves grid grid-cols-2 grid-rows-2'>
           {randomMoves.map((move, i) => (
-            <p key={i} className='text-xs capitalize'>{move.move.name}</p>
+            <p key={i} className='text-xs text-center capitalize border border-black rounded-full mx-1 my-1'>{move.move.name}</p>
           ))}
         </div>
       </div>

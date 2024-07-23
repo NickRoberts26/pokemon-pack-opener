@@ -7,7 +7,7 @@ const MainLayout = () => {
     return (
     <>
         <NavBar />
-        <div className='font-chakra max-w-[80%] m-auto'>
+        <div className='main-content font-chakra max-w-[80%] m-auto'>
             <Outlet />
         </div>
     </>

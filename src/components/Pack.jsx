@@ -6,7 +6,7 @@ const Pack = ({pokemonData}) => {
     const [pack, setPack] = useState([]);
     const [openedPack, setOpenedPack] = useState(false);
 
-    const rarities = ['bronze', 'silver', 'gold', 'diamond'];
+    const values = ['bronze', 'silver', 'gold', 'diamond']
     const probabilities = [0.5, 0.3, 0.15, 0.05];
 
     const getRandomRarity = () => {
@@ -15,7 +15,7 @@ const Pack = ({pokemonData}) => {
     
         for (let i = 0; i < cumulativeProbabilities.length; i++) {
           if (random < cumulativeProbabilities[i]) {
-            return rarities[i];
+            return values[i];
           }
         }
     };
@@ -36,29 +36,23 @@ const Pack = ({pokemonData}) => {
         setPack(addedRare);
     }
 
-    const openPack = () => {
-        setOpenedPack(true);
-    }
-
     useEffect(() => {
         generatePack(pokemonData);
     }, [pokemonData]);
 
     return (
         <>
-            <div onClick={openPack}>
-                { openedPack ? 
-                    <div className='pack-lineup grid justify-center gap-10 grid-cols-5 grid-rows-1'>
-                        {pack.map((pokemon, i) => (
-                            <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url} rarity={pokemon.rarity} flipped={false}/>
-                        ))}
-                    </div>
-                    :
-                    <div>
-                        Open Pack
-                    </div>
-                }
-            </div>
+            { openedPack ? 
+                <div className='pack-lineup w-full flex flex-wrap justify-center'>
+                    {pack.map((pokemon, i) => (
+                        <TradingCard key={i} apiCall={pokemon.url} rarity={pokemon.rarity} flipped={false}/>
+                    ))}
+                </div>
+                :
+                <div onClick={() => {setOpenedPack(true)}} className='card bg-gen-one w-[300px] h-[408px] relative flex flex-col justify-between border-8 rounded-xl p-8'>
+                    Generation I
+                </div>
+            }
         </>
     )
 }
