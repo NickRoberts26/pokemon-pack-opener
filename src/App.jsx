@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import FullCollectionPage from './pages/FullCollectionPage'
 import PacksPage from './pages/PacksPage';
+import PackPage from './pages/PackPage'
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
 
   const catchEmAll = async () => {
       try {
-          const url = `https://pokeapi.co/api/v2/pokemon?limit=151&offset=0`
+          const url = `https://pokeapi.co/api/v2/pokemon?limit=386&offset=0`
 
           const response = await fetch(url);
 
@@ -34,7 +35,8 @@ function App() {
       <Route path='/' element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path='/all' element={<FullCollectionPage pokemonData={allPokemon} />} />
-        <Route path='/packs' element={<PacksPage pokemonData={allPokemon} />} />
+        <Route path='/packs' element={<PacksPage />} />
+        <Route path='/packs/:id' element={<PackPage pokemonData={allPokemon} />} />
       </Route>
     )
   );

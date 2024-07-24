@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TradingCard from './TradingCard';
 
-const Pack = ({pokemonData}) => {
+const Pack = ({pokemonData, gen, bg}) => {
 
     const [pack, setPack] = useState([]);
     const [openedPack, setOpenedPack] = useState(false);
@@ -42,17 +42,11 @@ const Pack = ({pokemonData}) => {
 
     return (
         <>
-            { openedPack ? 
-                <div className='pack-lineup w-full flex flex-wrap justify-center'>
-                    {pack.map((pokemon, i) => (
-                        <TradingCard key={i} apiCall={pokemon.url} rarity={pokemon.rarity} flipped={false}/>
-                    ))}
-                </div>
-                :
-                <div onClick={() => {setOpenedPack(true)}} className='card bg-gen-one w-[300px] h-[408px] relative flex flex-col justify-between border-8 rounded-xl p-8'>
-                    Generation I
-                </div>
-            }
+            <div className='pack-lineup w-full flex flex-wrap justify-center'>
+                {pack.map((pokemon, i) => (
+                    <TradingCard key={i} apiCall={pokemon.url} rarity={pokemon.rarity} flipped={false}/>
+                ))}
+            </div>
         </>
     )
 }

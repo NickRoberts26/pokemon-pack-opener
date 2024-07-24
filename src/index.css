@@ -71,6 +71,46 @@ button {
   min-height: calc(100vh - 104px);
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.green-shine {
+  background: linear-gradient(
+    45deg,
+    #8FBC8F 5%,  /* DarkSeaGreen */
+    #ADFF2F 10%, /* GreenYellow */
+    #90EE90 30%, /* LightGreen */
+    #FFFFFF 50%, /* PaleGreen */
+    #90EE90 70%, /* LightGreen */
+    #ADFF2F 80%, /* GreenYellow */
+    #8FBC8F 95%  /* DarkSeaGreen */
+  );
+}
+
+.blue-shine {
+  background: linear-gradient(
+    45deg,
+    #87CEEB 5%,  /* SkyBlue */
+    #B0E0E6 10%, /* PowderBlue */
+    #ADD8E6 30%, /* LightBlue */
+    #FFFFFF 50%, /* LightCyan */
+    #ADD8E6 70%, /* LightBlue */
+    #B0E0E6 80%, /* PowderBlue */
+    #87CEEB 95%  /* SkyBlue */
+);
+}
+
+.purple-shine {
+  background: linear-gradient(
+    45deg,
+    #D8BFD8 5%,  /* Thistle */
+    #DDA0DD 10%, /* Plum */
+    #DA70D6 30%, /* Orchid */
+    #FFFFFF 50%, /* White */
+    #DA70D6 70%, /* Orchid */
+    #DDA0DD 80%, /* Plum */
+    #D8BFD8 95%  /* Thistle */
+  );
 }

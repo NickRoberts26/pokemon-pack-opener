@@ -79,7 +79,7 @@ const TradingCard = ({apiCall, rarity, img, flipped}) => {
             <div className='absolute top-2 left-2 flex items-center'>
               {types.map((type, i) => (
                 <div className='w-10 mr-1' key={i}>
-                  <img src={`src/assets/type-icons/${type}_type.png`} alt="" />
+                  <img src={`../src/assets/type-icons/${type}_type.png`} alt="" />
                 </div>
               ))}
             </div>
