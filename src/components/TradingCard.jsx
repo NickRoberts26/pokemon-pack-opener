@@ -2,21 +2,32 @@ import React, { useState, useEffect } from 'react'
 import ReactCardFlip from 'react-card-flip';
 import CardBack from './CardBack';
 
-const TradingCard = ({apiCall, rarity, img, flipped}) => {
+const TradingCard = ({apiCall, rarity, img, flipped, addScore}) => {
 
   const [pokemon, setPokemon] = useState({});
-  const [moveset, setMoveset] = useState([]);
   const [types, setTypes] = useState([]);
   const [isFlipped, setIsFlipped] = useState(flipped);
+  const [theMoves, setTheMoves] = useState([]);
 
   //Creates a bg-color for all the types
   const rarityToBorderClass = {
     bronze: 'border-bronze',
     silver: 'border-silver',
     gold: 'border-gold',
-    diamond: 'border-diamond'
+    diamond: 'border-diamond',
+    cosmic: 'border-cosmic cosmic-card'
   };
   const cardRarity = rarityToBorderClass[rarity] || 'border-pikachu';
+
+  //Set the cards value
+  const possibleScores = {
+    bronze: Math.round(pokemon.exp / 6),
+    silver: Math.round(pokemon.exp / 4),
+    gold: Math.round(pokemon.exp / 2),
+    diamond: Math.round(pokemon.exp / 1),
+    cosmic: Math.round(pokemon.exp / 0.5)
+  };
+  const cardValue = possibleScores[rarity];
 
   //Randomly selects 4 elements from an array and returns them
   const getRandomElements = (arr) => {
@@ -26,11 +37,12 @@ const TradingCard = ({apiCall, rarity, img, flipped}) => {
     ))
     
     const shuffled = [...onlyLvl].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 4);
+    setTheMoves(shuffled.slice(0, 4));
   };
 
   const handleFlip = (e) => {
     e.preventDefault();
+    addScore(cardValue);
     setIsFlipped(prevState => !prevState);
   };
 
@@ -49,10 +61,14 @@ const TradingCard = ({apiCall, rarity, img, flipped}) => {
           silver_image: data.sprites.other.home.front_default,
           gold_image: data.sprites.other.showdown.front_default,
           diamond_image: data.sprites.other.showdown.front_shiny,
+          cosmic_image: data.sprites.other.showdown.front_shiny,
           type: data.types,
+          exp: data.base_experience
         })
 
-        setMoveset(data.moves);
+        const moves = data.moves;
+
+        getRandomElements(moves);
 
         setTypes(data.types.map((type) => (
           type.type.name
@@ -67,35 +83,39 @@ const TradingCard = ({apiCall, rarity, img, flipped}) => {
       catchOne();
   }, [])
 
-  //Creates the moveset for each Pokemon
-  const randomMoves = getRandomElements(moveset);
-
   return (
-    <ReactCardFlip isFlipped={isFlipped}>
-      <CardBack handleFlip={handleFlip} rarity={rarity} border={rarityToBorderClass}/>
-      <div className={`card ${cardRarity} h-[408px] w-[270px] mb-8 mx-4 relative flex flex-col justify-between border-8 rounded-xl px-8 pb-8 pt-12`}>
-        <header>
-          <h1 className='text-3xl text-center capitalize'>{pokemon.name}</h1>
-            <div className='absolute top-2 left-2 flex items-center'>
-              {types.map((type, i) => (
-                <div className='w-10 mr-1' key={i}>
-                  <img src={`../src/assets/type-icons/${type}_type.png`} alt="" />
+    <div className={`effect-layer ${cardRarity}`}>
+      <ReactCardFlip isFlipped={isFlipped}>
+        <CardBack handleFlip={handleFlip} rarity={rarity} border={rarityToBorderClass}/>
+        <div className={`card ${cardRarity} h-[408px] w-[270px] mb-8 mx-4 relative flex flex-col justify-between border-8 rounded-xl px-6 pb-8 pt-12`}>
+          <header>
+            <h1 className='text-3xl text-center capitalize'>{pokemon.name}</h1>
+              <div className='absolute w-full top-2 left-0 px-2 flex items-center justify-between'>
+                <div className='flex'>
+                  {types.map((type, i) => (
+                    <div className='w-10 mr-1' key={i}>
+                      <img src={`../src/assets/type-icons/${type}_type.png`} alt="type" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-        </header>
-        <div className='flex justify-center'>
-          {pokemon.diamond_image && (
-            rarity ? <img className='object-contain w-3/5' src={pokemon[`${rarity}_image`]} alt="" /> : <img className='object-contain w-3/5' src={pokemon.gold_image} alt="" />
-          )}
+                <div className='value border-2 border-black w-9 h-9 rounded-full flex items-center justify-center'>
+                  {cardValue}
+                </div>
+              </div>
+          </header>
+          <div className='flex justify-center'>
+            {pokemon.diamond_image && (
+              rarity ? <img className='object-contain w-3/5' src={pokemon[`${rarity}_image`]} alt="" /> : <img className='object-contain w-3/5' src={pokemon.gold_image} alt="" />
+            )}
+          </div>
+          <div className='moves grid grid-cols-2 grid-rows-2'>
+            {theMoves.map((move, i) => (
+              <p key={i} className='text-xs text-center capitalize border border-black rounded-full mx-1 my-1'>{move.move.name}</p>
+            ))}
+          </div>
         </div>
-        <div className='moves grid grid-cols-2 grid-rows-2'>
-          {randomMoves.map((move, i) => (
-            <p key={i} className='text-xs text-center capitalize border border-black rounded-full mx-1 my-1'>{move.move.name}</p>
-          ))}
-        </div>
-      </div>
-    </ReactCardFlip>
+      </ReactCardFlip>
+    </div>
   )
 }
 

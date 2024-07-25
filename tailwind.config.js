@@ -34,7 +34,11 @@ export default {
         'bronze': '#CD7F32',
         'silver': '#C0C0C0',
         'gold': '#FFD700',
-        'diamond': '#B9F2FF'
+        'diamond': '#B9F2FF',
+        'cosmic': '#bf01fe'
+      },
+      backgroundImage: {
+        'cosmic-pattern': "url('../src/assets/cosmic-bg.jpg')"
       }
     },
   },
