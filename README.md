@@ -13,6 +13,7 @@ Welcome to the Pokémon Pack Opener! This is a fun web application where you can
 - **React**: A JavaScript library for building user interfaces.
 - **Vite**: A build tool that provides a faster and leaner development experience for modern web projects.
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
+- **PokeAPI**: All pokemon data has been pulled from the PokeAPI which you can find here: https://pokeapi.co/
 
 ## Demo
 
