@@ -8,7 +8,7 @@ const PacksPage = () => {
       <header className='mb-10'>
         <h1>Choose a Pack</h1>
       </header>
-      <div className='flex'>
+      <div className='flex pb-20'>
         <Link to="gen-I">
           <div className={`card w-[300px] h-[408px] purple-shine relative flex flex-col items-center justify-center border-8 border-pikachu rounded-xl p-6 mx-4`}>
               <div className='w-3/4 mb-2'>

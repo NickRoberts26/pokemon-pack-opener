@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import TradingCard from './TradingCard';
 
-const Pack = ({pokemonData, gen, bg}) => {
+const Pack = ({pokemonData}) => {
 
     const [pack, setPack] = useState([]);
     const [packScore, setPackScore] = useState(0);
 
     const values = ['bronze', 'silver', 'gold', 'diamond', 'cosmic']
-    const probabilities = [0.49, 0.3, 0.15, 0.05, 0.01];
+    const probabilities = [0.50, 0.3, 0.14, 0.05, 0.01];
 
     const getRandomRarity = () => {
         const cumulativeProbabilities = probabilities.map((sum => value => sum += value)(0));
@@ -46,8 +46,15 @@ const Pack = ({pokemonData, gen, bg}) => {
 
     return (
         <>
-            <div className='text-3xl mx-4 mb-10'>
-                Total Score: {packScore}
+            <div className='flex justify-between items-center mx-4 mb-10'>
+                <div className='text-3xl'>
+                    Total Score: {packScore}
+                </div>
+                <div>
+                    <button className='bg-white border border-red' onClick={() => { window.location.reload() }}>
+                        New Pack
+                    </button>
+                </div>
             </div>
             <div className='pack-lineup w-full flex flex-wrap justify-center'>
                 {pack.map((pokemon, i) => (

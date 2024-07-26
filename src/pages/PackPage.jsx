@@ -30,7 +30,7 @@ const PackPage = ({pokemonData}) => {
   
   return (
     <div>
-      <Pack pokemonData={generation} gen={activeGen} bg='purple-shine'/>
+      <Pack pokemonData={generation} />
     </div>
   )
 }

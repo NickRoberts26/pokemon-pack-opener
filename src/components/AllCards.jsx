@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import TradingCard from './TradingCard';
+import ScrollToTop from './ScrollToTop';
 
 // Get pokemons number from api call
 const extractNumberFromUrl = (url) => {
@@ -21,10 +22,13 @@ const AllCards = ({pokemonData}) => {
     pokemonData.sort(compareByNumberInUrl);
     
     return (
-        <div className='grid justify-center gap-10 grid-cols-3 grid-rows-3'>
-            {pokemonData.map((pokemon, i) => (
-                <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url} flipped={true}/>
-            ))}
+        <div className='relative'>
+            <div className='grid justify-center gap-10 grid-cols-3 grid-rows-3'>
+                {pokemonData.map((pokemon, i) => (
+                    <TradingCard key={i} name={pokemon.name} apiCall={pokemon.url} flipped={true}/>
+                ))}
+            </div>
+            <ScrollToTop />
         </div>
     )
 }
