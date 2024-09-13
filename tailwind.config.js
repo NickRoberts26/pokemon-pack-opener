@@ -38,7 +38,7 @@ export default {
         'cosmic': '#bf01fe'
       },
       backgroundImage: {
-        'cosmic-pattern': "url('../src/assets/cosmic-bg.jpg')"
+        'cosmic-pattern': "url('/cosmic-bg.jpg')"
       }
     },
   },
