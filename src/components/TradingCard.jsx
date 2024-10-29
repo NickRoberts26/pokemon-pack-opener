@@ -80,7 +80,7 @@ const TradingCard = ({apiCall, rarity, flipped, addScore}) => {
 
   return (
     <>
-      {isLoading ? <div className='h-[408px] w-[270px] mx-4 flex items-center justify-center'><img className='w-1/2 loading-spin' src="src/assets/pokeball.png" alt="" /></div> :
+      {isLoading ? <div className='h-[408px] w-[270px] mx-4 flex items-center justify-center'><img className='w-1/2 loading-spin' src="\pokeball.png" alt="" /></div> :
           <div className={`effect-layer ${cardRarity}`}>
           <ReactCardFlip isFlipped={isFlipped}>
             <CardBack handleFlip={handleFlip} rarity={rarity} border={rarityToBorderClass}/>
